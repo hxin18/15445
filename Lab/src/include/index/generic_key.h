@@ -7,7 +7,6 @@
  * purposes, the actual size of which is specified and instantiated
  * with a template argument.
  */
-
 #pragma once
 
 #include <cstring>
@@ -19,7 +18,7 @@ namespace cmudb {
 template <size_t KeySize> class GenericKey {
 public:
   inline void SetFromKey(const Tuple &tuple) {
-    // initialize to 0
+    // intialize to 0
     memset(data, 0, KeySize);
     memcpy(data, tuple.GetData(), tuple.GetLength());
   }

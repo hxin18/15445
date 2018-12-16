@@ -21,21 +21,13 @@ class Page {
 
 public:
   Page() { ResetMemory(); }
-  ~Page() {};
-
-  // disable copy
-  Page(Page const &) = delete;
-  Page &operator=(Page const &) = delete;
-
+  ~Page(){};
   // get actual data page content
   inline char *GetData() { return data_; }
-
   // get page id
   inline page_id_t GetPageId() { return page_id_; }
-
   // get page pin count
   inline int GetPinCount() { return pin_count_; }
-
   // method use to latch/unlatch page content
   inline void WUnlatch() { rwlatch_.WUnlock(); }
   inline void WLatch() { rwlatch_.WLock(); }
@@ -48,7 +40,6 @@ public:
 private:
   // method used by buffer pool manager
   inline void ResetMemory() { memset(data_, 0, PAGE_SIZE); }
-
   // members
   char data_[PAGE_SIZE]; // actual data
   page_id_t page_id_ = INVALID_PAGE_ID;

@@ -15,11 +15,7 @@ void TablePage::Init(page_id_t page_id, size_t page_size,
                      Transaction *txn) {
   memcpy(GetData(), &page_id, 4); // set page_id
   if (ENABLE_LOGGING) {
-    LogRecord log(txn->GetTransactionId(), txn->GetPrevLSN(),
-                  LogRecordType::NEWPAGE, prev_page_id);
-    lsn_t lsn = log_manager->AppendLogRecord(log);
-    txn->SetPrevLSN(lsn);
-    SetLSN(lsn);
+    // TODO: add your logging logic here
   }
   SetPrevPageId(prev_page_id);
   SetNextPageId(INVALID_PAGE_ID);
@@ -65,9 +61,9 @@ bool TablePage::InsertTuple(const Tuple &tuple, RID &rid, Transaction *txn,
     if (GetTupleSize(i) == 0) { // empty slot
       if (ENABLE_LOGGING) {
         assert(txn->GetSharedLockSet()->find(rid) ==
-            txn->GetSharedLockSet()->end() &&
-            txn->GetExclusiveLockSet()->find(rid) ==
-                txn->GetExclusiveLockSet()->end());
+                   txn->GetSharedLockSet()->end() &&
+               txn->GetExclusiveLockSet()->find(rid) ==
+                   txn->GetExclusiveLockSet()->end());
       }
       break;
     }
@@ -79,7 +75,7 @@ bool TablePage::InsertTuple(const Tuple &tuple, RID &rid, Transaction *txn,
   }
 
   SetFreeSpacePointer(GetFreeSpacePointer() -
-      tuple.size_); // update free space pointer first
+                      tuple.size_); // update free space pointer first
   memcpy(GetData() + GetFreeSpacePointer(), tuple.data_, tuple.size_);
   SetTupleOffset(i, GetFreeSpacePointer());
   SetTupleSize(i, tuple.size_);
@@ -91,13 +87,9 @@ bool TablePage::InsertTuple(const Tuple &tuple, RID &rid, Transaction *txn,
   if (ENABLE_LOGGING) {
     // acquire the exclusive lock
     assert(lock_manager->LockExclusive(txn, rid.Get()));
-    LogRecord log(txn->GetTransactionId(), txn->GetPrevLSN(),
-                  LogRecordType::INSERT, rid, tuple);
-    lsn_t lsn = log_manager->AppendLogRecord(log);
-    txn->SetPrevLSN(lsn);
-    SetLSN(lsn);
+    // TODO: add your logging logic here
   }
-  //LOG_DEBUG("Tuple inserted");
+  // LOG_DEBUG("Tuple inserted");
   return true;
 }
 
@@ -132,25 +124,11 @@ bool TablePage::MarkDelete(const RID &rid, Transaction *txn,
       if (!lock_manager->LockUpgrade(txn, rid))
         return false;
     } else if (txn->GetExclusiveLockSet()->find(rid) ==
-        txn->GetExclusiveLockSet()->end() &&
-        !lock_manager->LockExclusive(txn, rid)) { // no shared lock
+                   txn->GetExclusiveLockSet()->end() &&
+               !lock_manager->LockExclusive(txn, rid)) { // no shared lock
       return false;
     }
-
-    // first copy deleted tuple
-    int32_t tuple_offset = GetTupleOffset(slot_num);
-    Tuple tuple;
-    tuple.size_ = tuple_size;
-    tuple.data_ = new char[tuple.size_];
-    memcpy(tuple.data_, GetData() + tuple_offset, tuple.size_);
-    tuple.rid_ = rid;
-    tuple.allocated_ = true;
-
-    LogRecord log(txn->GetTransactionId(), txn->GetPrevLSN(),
-                  LogRecordType::MARKDELETE, rid, tuple);
-    lsn_t lsn = log_manager->AppendLogRecord(log);
-    txn->SetPrevLSN(lsn);
-    SetLSN(lsn);
+    // TODO: add your logging logic here
   }
 
   // set tuple size to negative value
@@ -200,15 +178,11 @@ bool TablePage::UpdateTuple(const Tuple &new_tuple, Tuple &old_tuple,
       if (!lock_manager->LockUpgrade(txn, rid))
         return false;
     } else if (txn->GetExclusiveLockSet()->find(rid) ==
-        txn->GetExclusiveLockSet()->end() &&
-        !lock_manager->LockExclusive(txn, rid)) { // no shared lock
+                   txn->GetExclusiveLockSet()->end() &&
+               !lock_manager->LockExclusive(txn, rid)) { // no shared lock
       return false;
     }
-    LogRecord log(txn->GetTransactionId(), txn->GetPrevLSN(),
-                  LogRecordType::UPDATE, rid, old_tuple, new_tuple);
-    lsn_t lsn = log_manager->AppendLogRecord(log);
-    txn->SetPrevLSN(lsn);
-    SetLSN(lsn);
+    // TODO: add your logging logic here
   }
 
   // update
@@ -259,13 +233,8 @@ void TablePage::ApplyDelete(const RID &rid, Transaction *txn,
   if (ENABLE_LOGGING) {
     // must already grab the exclusive lock
     assert(txn->GetExclusiveLockSet()->find(rid) !=
-        txn->GetExclusiveLockSet()->end());
-
-    LogRecord log(txn->GetTransactionId(), txn->GetPrevLSN(),
-                  LogRecordType::APPLYDELETE, rid, delete_tuple);
-    lsn_t lsn = log_manager->AppendLogRecord(log);
-    txn->SetPrevLSN(lsn);
-    SetLSN(lsn);
+           txn->GetExclusiveLockSet()->end());
+    // TODO: add your logging logic here
   }
 
   int32_t free_space_pointer =
@@ -292,30 +261,17 @@ void TablePage::ApplyDelete(const RID &rid, Transaction *txn,
  */
 void TablePage::RollbackDelete(const RID &rid, Transaction *txn,
                                LogManager *log_manager) {
-  int slot_num = rid.GetSlotNum();
-  assert(slot_num < GetTupleCount());
-  int32_t tuple_size = GetTupleSize(slot_num);
-
   if (ENABLE_LOGGING) {
     // must have already grab the exclusive lock
     assert(txn->GetExclusiveLockSet()->find(rid) !=
-        txn->GetExclusiveLockSet()->end());
+           txn->GetExclusiveLockSet()->end());
 
-    // first copy deleted tuple
-    int32_t tuple_offset = GetTupleOffset(slot_num);
-    Tuple tuple;
-    tuple.size_ = -tuple_size;
-    tuple.data_ = new char[tuple.size_];
-    memcpy(tuple.data_, GetData() + tuple_offset, tuple.size_);
-    tuple.rid_ = rid;
-    tuple.allocated_ = true;
-
-    LogRecord log(txn->GetTransactionId(), txn->GetPrevLSN(),
-                  LogRecordType::ROLLBACKDELETE, rid, tuple);
-    lsn_t lsn = log_manager->AppendLogRecord(log);
-    txn->SetPrevLSN(lsn);
-    SetLSN(lsn);
+    // TODO: add your logging logic here
   }
+
+  int slot_num = rid.GetSlotNum();
+  assert(slot_num < GetTupleCount());
+  int32_t tuple_size = GetTupleSize(slot_num);
 
   // set tuple size to positive value
   if (tuple_size < 0)
@@ -340,7 +296,7 @@ bool TablePage::GetTuple(const RID &rid, Tuple &tuple, Transaction *txn,
   if (ENABLE_LOGGING) {
     // acquire shared lock
     if (txn->GetExclusiveLockSet()->find(rid) ==
-        txn->GetExclusiveLockSet()->end() &&
+            txn->GetExclusiveLockSet()->end() &&
         txn->GetSharedLockSet()->find(rid) == txn->GetSharedLockSet()->end() &&
         !lock_manager->LockShared(txn, rid)) {
       return false;
@@ -390,19 +346,19 @@ bool TablePage::GetNextTupleRid(const RID &cur_rid, RID &next_rid) {
 
 // tuple slots
 int32_t TablePage::GetTupleOffset(int slot_num) {
-  return *reinterpret_cast<int32_t *>(GetData() + 24 + 8*slot_num);
+  return *reinterpret_cast<int32_t *>(GetData() + 24 + 8 * slot_num);
 }
 
 int32_t TablePage::GetTupleSize(int slot_num) {
-  return *reinterpret_cast<int32_t *>(GetData() + 28 + 8*slot_num);
+  return *reinterpret_cast<int32_t *>(GetData() + 28 + 8 * slot_num);
 }
 
 void TablePage::SetTupleOffset(int slot_num, int32_t offset) {
-  memcpy(GetData() + 24 + 8*slot_num, &offset, 4);
+  memcpy(GetData() + 24 + 8 * slot_num, &offset, 4);
 }
 
 void TablePage::SetTupleSize(int slot_num, int32_t offset) {
-  memcpy(GetData() + 28 + 8*slot_num, &offset, 4);
+  memcpy(GetData() + 28 + 8 * slot_num, &offset, 4);
 }
 
 // free space
@@ -425,6 +381,6 @@ void TablePage::SetTupleCount(int32_t tuple_count) {
 
 // for free space calculation
 int32_t TablePage::GetFreeSpaceSize() {
-  return GetFreeSpacePointer() - 24 - GetTupleCount()*8;
+  return GetFreeSpacePointer() - 24 - GetTupleCount() * 8;
 }
 } // namespace cmudb
