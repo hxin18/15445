@@ -11,7 +11,7 @@ BuildDirectory: /Users/xinhuang/Documents/cmu_self/15445/Lab/build
 CostDataFile: 
 
 # Site is something like machine.domain, i.e. pragmatic.crd
-Site: vpn-208-002.usc.edu
+Site: XindeMacBook-Pro.local
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
 BuildName: Darwin-c++

@@ -1124,8 +1124,8 @@ test/preinstall:
 # Target rules for target test/CMakeFiles/virtual_table_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/virtual_table_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/virtual_table_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/virtual_table_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/virtual_table_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/virtual_table_test.dir/build.make test/CMakeFiles/virtual_table_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/virtual_table_test.dir/build.make test/CMakeFiles/virtual_table_test.dir/build
@@ -1158,8 +1158,8 @@ clean: test/CMakeFiles/virtual_table_test.dir/clean
 # Target rules for target test/CMakeFiles/type_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/type_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/type_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/type_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/type_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/type_test.dir/build.make test/CMakeFiles/type_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/type_test.dir/build.make test/CMakeFiles/type_test.dir/build
@@ -1192,8 +1192,8 @@ clean: test/CMakeFiles/type_test.dir/clean
 # Target rules for target test/CMakeFiles/tuple_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/tuple_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/tuple_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/tuple_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/tuple_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/tuple_test.dir/build.make test/CMakeFiles/tuple_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/tuple_test.dir/build.make test/CMakeFiles/tuple_test.dir/build
@@ -1226,8 +1226,8 @@ clean: test/CMakeFiles/tuple_test.dir/clean
 # Target rules for target test/CMakeFiles/log_manager_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/log_manager_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/log_manager_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/log_manager_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/log_manager_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/log_manager_test.dir/build.make test/CMakeFiles/log_manager_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/log_manager_test.dir/build.make test/CMakeFiles/log_manager_test.dir/build
@@ -1260,8 +1260,8 @@ clean: test/CMakeFiles/log_manager_test.dir/clean
 # Target rules for target test/CMakeFiles/b_plus_tree_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/b_plus_tree_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/b_plus_tree_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/b_plus_tree_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/b_plus_tree_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/b_plus_tree_test.dir/build.make test/CMakeFiles/b_plus_tree_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/b_plus_tree_test.dir/build.make test/CMakeFiles/b_plus_tree_test.dir/build
@@ -1294,8 +1294,8 @@ clean: test/CMakeFiles/b_plus_tree_test.dir/clean
 # Target rules for target test/CMakeFiles/lock_manager_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/lock_manager_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/lock_manager_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/lock_manager_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/lock_manager_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/lock_manager_test.dir/build.make test/CMakeFiles/lock_manager_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/lock_manager_test.dir/build.make test/CMakeFiles/lock_manager_test.dir/build
@@ -1328,8 +1328,8 @@ clean: test/CMakeFiles/lock_manager_test.dir/clean
 # Target rules for target test/CMakeFiles/b_plus_tree_print_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/b_plus_tree_print_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/b_plus_tree_print_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/b_plus_tree_print_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/b_plus_tree_print_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/b_plus_tree_print_test.dir/build.make test/CMakeFiles/b_plus_tree_print_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/b_plus_tree_print_test.dir/build.make test/CMakeFiles/b_plus_tree_print_test.dir/build
@@ -1362,8 +1362,8 @@ clean: test/CMakeFiles/b_plus_tree_print_test.dir/clean
 # Target rules for target test/CMakeFiles/b_plus_tree_concurrent_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/b_plus_tree_concurrent_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/b_plus_tree_concurrent_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/b_plus_tree_concurrent_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/b_plus_tree_concurrent_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/b_plus_tree_concurrent_test.dir/build.make test/CMakeFiles/b_plus_tree_concurrent_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/b_plus_tree_concurrent_test.dir/build.make test/CMakeFiles/b_plus_tree_concurrent_test.dir/build
@@ -1396,8 +1396,8 @@ clean: test/CMakeFiles/b_plus_tree_concurrent_test.dir/clean
 # Target rules for target test/CMakeFiles/extendible_hash_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/extendible_hash_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/extendible_hash_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/extendible_hash_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/extendible_hash_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/extendible_hash_test.dir/build.make test/CMakeFiles/extendible_hash_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/extendible_hash_test.dir/build.make test/CMakeFiles/extendible_hash_test.dir/build
@@ -1430,8 +1430,8 @@ clean: test/CMakeFiles/extendible_hash_test.dir/clean
 # Target rules for target test/CMakeFiles/lru_replacer_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/lru_replacer_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/lru_replacer_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/lru_replacer_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/lru_replacer_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/lru_replacer_test.dir/build.make test/CMakeFiles/lru_replacer_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/lru_replacer_test.dir/build.make test/CMakeFiles/lru_replacer_test.dir/build
@@ -1464,8 +1464,8 @@ clean: test/CMakeFiles/lru_replacer_test.dir/clean
 # Target rules for target test/CMakeFiles/rwmutex_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/rwmutex_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/rwmutex_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/rwmutex_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/rwmutex_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/rwmutex_test.dir/build.make test/CMakeFiles/rwmutex_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/rwmutex_test.dir/build.make test/CMakeFiles/rwmutex_test.dir/build
@@ -1498,8 +1498,8 @@ clean: test/CMakeFiles/rwmutex_test.dir/clean
 # Target rules for target test/CMakeFiles/buffer_pool_manager_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/buffer_pool_manager_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/buffer_pool_manager_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/buffer_pool_manager_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/buffer_pool_manager_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/buffer_pool_manager_test.dir/build.make test/CMakeFiles/buffer_pool_manager_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/buffer_pool_manager_test.dir/build.make test/CMakeFiles/buffer_pool_manager_test.dir/build
@@ -1533,18 +1533,18 @@ clean: test/CMakeFiles/buffer_pool_manager_test.dir/clean
 
 # All Build rule for target.
 test/CMakeFiles/check.dir/all: test/CMakeFiles/buffer_pool_manager_test.dir/all
-test/CMakeFiles/check.dir/all: test/CMakeFiles/rwmutex_test.dir/all
-test/CMakeFiles/check.dir/all: test/CMakeFiles/extendible_hash_test.dir/all
-test/CMakeFiles/check.dir/all: test/CMakeFiles/lru_replacer_test.dir/all
-test/CMakeFiles/check.dir/all: test/CMakeFiles/virtual_table_test.dir/all
-test/CMakeFiles/check.dir/all: test/CMakeFiles/b_plus_tree_print_test.dir/all
-test/CMakeFiles/check.dir/all: test/CMakeFiles/b_plus_tree_concurrent_test.dir/all
-test/CMakeFiles/check.dir/all: test/CMakeFiles/header_page_test.dir/all
-test/CMakeFiles/check.dir/all: test/CMakeFiles/type_test.dir/all
-test/CMakeFiles/check.dir/all: test/CMakeFiles/tuple_test.dir/all
 test/CMakeFiles/check.dir/all: test/CMakeFiles/log_manager_test.dir/all
 test/CMakeFiles/check.dir/all: test/CMakeFiles/b_plus_tree_test.dir/all
 test/CMakeFiles/check.dir/all: test/CMakeFiles/lock_manager_test.dir/all
+test/CMakeFiles/check.dir/all: test/CMakeFiles/b_plus_tree_print_test.dir/all
+test/CMakeFiles/check.dir/all: test/CMakeFiles/virtual_table_test.dir/all
+test/CMakeFiles/check.dir/all: test/CMakeFiles/header_page_test.dir/all
+test/CMakeFiles/check.dir/all: test/CMakeFiles/type_test.dir/all
+test/CMakeFiles/check.dir/all: test/CMakeFiles/tuple_test.dir/all
+test/CMakeFiles/check.dir/all: test/CMakeFiles/extendible_hash_test.dir/all
+test/CMakeFiles/check.dir/all: test/CMakeFiles/b_plus_tree_concurrent_test.dir/all
+test/CMakeFiles/check.dir/all: test/CMakeFiles/lru_replacer_test.dir/all
+test/CMakeFiles/check.dir/all: test/CMakeFiles/rwmutex_test.dir/all
 	$(MAKE) -f test/CMakeFiles/check.dir/build.make test/CMakeFiles/check.dir/depend
 	$(MAKE) -f test/CMakeFiles/check.dir/build.make test/CMakeFiles/check.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/xinhuang/Documents/cmu_self/15445/Lab/build/CMakeFiles --progress-num= "Built target check"
@@ -1576,8 +1576,8 @@ clean: test/CMakeFiles/check.dir/clean
 # Target rules for target test/CMakeFiles/header_page_test.dir
 
 # All Build rule for target.
-test/CMakeFiles/header_page_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/header_page_test.dir/all: src/CMakeFiles/sqlite3.dir/all
+test/CMakeFiles/header_page_test.dir/all: src/CMakeFiles/vtable.dir/all
 test/CMakeFiles/header_page_test.dir/all: test/CMakeFiles/gtest.dir/all
 	$(MAKE) -f test/CMakeFiles/header_page_test.dir/build.make test/CMakeFiles/header_page_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/header_page_test.dir/build.make test/CMakeFiles/header_page_test.dir/build
