@@ -156,16 +156,14 @@ if(bucket->items.size()>bucket_size_){
         }
       }
     }
-
-    // update to right index: for split point
-     if (bucket->id != old_index) {
-       buckets_[old_index].reset();
-       buckets_[bucket->id] = bucket;
-     }
   }
-  // std::cout<<buckets_.size()<<new_bucket->id-1<<" "<<buckets_[new_bucket->id-1]<<std::endl;
+  // update to right index: for split point
+   if (bucket->id != old_index) {
+     buckets_[old_index].reset();
+     buckets_[bucket->id] = bucket;
+   }
   buckets_[new_bucket->id] = new_bucket;
-  // std::cout<<buckets_.size()<<new_bucket->id-1<<" "<<buckets_[new_bucket->id-1]<<std::endl;
+
 
 }
 // std::cout<<"insert: "<<key<<std::endl;
