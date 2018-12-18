@@ -166,16 +166,6 @@ if(bucket->items.size()>bucket_size_){
 
 
 }
-// std::cout<<"insert: "<<key<<std::endl;
-// std::cout<<"depth: "<<depth<<std::endl;
-// for(size_t i = 0; i <buckets_.size();i++){
-//   if(!buckets_[i]){
-//     continue;
-//   }
-//   std::cout<<"id: "<<buckets_[i]->id<<std::endl;
-//   std::cout<<"size: "<<buckets_[i]->items.size()<<std::endl;
-// }
-// std::cout<<"+++++++++++++++"<<depth<<std::endl;
 
 
 }
