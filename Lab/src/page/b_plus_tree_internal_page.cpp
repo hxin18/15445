@@ -29,6 +29,8 @@ Init(page_id_t page_id, page_id_t parent_id) {
   SetParentPageId(parent_id);
 
   // set max page size, header is 24bytes
+  // to explain this, the total size is 24 byte,
+  //the size is actually the maximum number of kv pairs
   int size = (PAGE_SIZE - sizeof(BPlusTreeInternalPage))/
       (sizeof(KeyType) + sizeof(ValueType));
   SetMaxSize(size);
@@ -118,12 +120,15 @@ Lookup(const KeyType &key, const KeyComparator &comparator) const {
   } else if (comparator(key, array[GetSize() - 1].first) >= 0) {
     return array[GetSize() - 1].second;
   }
+  //there are m entry and m+1 children.
+  //the first entry is correspond with the value of key 0
+  //k0-v1 k1-v2...
 
   int low = 1, high = GetSize() - 1, mid;
-  while (low < high && low + 1 != high) {
+  while (low < high) {
     mid = low + (high - low)/2;
     if (comparator(key, array[mid].first) < 0) {
-      high = mid;
+      high = mid-1;
     } else if (comparator(key, array[mid].first) > 0) {
       low = mid;
     } else {
@@ -147,8 +152,9 @@ void BPlusTreeInternalPage<KeyType, ValueType, KeyComparator>::
 PopulateNewRoot(const ValueType &old_value, const KeyType &new_key,
                 const ValueType &new_value) {
   // must be an empty page
+  //this function is called when a root is split and we need to create a new root
   assert(GetSize() == 1);
-  array[0].second = old_value;
+  array[0].second = old_value;//the old root
   array[1] = {new_key, new_value};
   IncreaseSize(1);
 }
@@ -162,20 +168,39 @@ template <typename KeyType, typename ValueType, typename KeyComparator>
 int BPlusTreeInternalPage<KeyType, ValueType, KeyComparator>::
 InsertNodeAfter(const ValueType &old_value, const KeyType &new_key,
                 const ValueType &new_value) {
-  for (int i = GetSize(); i > 0; --i) {
+  int pos = GetSize();
+  //find whether can be found.
+  for (int i = GetSize()-1; i > 0; --i) {
     if (array[i - 1].second == old_value) {
-      array[i] = {new_key, new_value};
-      IncreaseSize(1);
+      pos = i;
       break;
     }
+  }
+  for(int i = GetSize();i>pos;i--){
     array[i] = array[i - 1];
   }
+  array[pos] = {new_key, new_value};
+  IncreaseSize(1);
   return GetSize();
 }
 
 /*****************************************************************************
  * SPLIT
  *****************************************************************************/
+ template <typename KeyType, typename ValueType, typename KeyComparator>
+ void BPlusTreeInternalPage<KeyType, ValueType, KeyComparator>::
+ CopyHalfFrom(MappingType *items, int size,
+              BufferPoolManager *buffer_pool_manager) {
+   // must be a new page
+   assert(!IsLeafPage() && GetSize() == 1 && size > 0);
+   //the first key is still invalide for lookup in recipient
+   for (int i = 0; i < size; ++i) {
+     array[i] = *items++;
+   }
+   IncreaseSize(size - 1);
+ }
+
+
 /*
  * Remove half of key & value pairs from this page to "recipient" page
  */
@@ -200,18 +225,6 @@ MoveHalfTo(BPlusTreeInternalPage *recipient,
     buffer_pool_manager->UnpinPage(child->GetPageId(), true);
   }
   IncreaseSize(-1*half);
-}
-
-template <typename KeyType, typename ValueType, typename KeyComparator>
-void BPlusTreeInternalPage<KeyType, ValueType, KeyComparator>::
-CopyHalfFrom(MappingType *items, int size,
-             BufferPoolManager *buffer_pool_manager) {
-  // must be a new page
-  assert(!IsLeafPage() && GetSize() == 1 && size > 0);
-  for (int i = 0; i < size; ++i) {
-    array[i] = *items++;
-  }
-  IncreaseSize(size - 1);
 }
 
 /*****************************************************************************
