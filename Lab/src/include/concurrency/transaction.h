@@ -103,18 +103,21 @@ public:
 
 private:
   TransactionState state_;
+
   // thread id, single-threaded transactions
   std::thread::id thread_id_;
   // transaction id
   txn_id_t txn_id_;
+
   // Below are used by transaction, undo set
   std::shared_ptr<std::deque<WriteRecord>> write_set_;
   // prev lsn
   lsn_t prev_lsn_;
 
   // Below are used by concurrent index
-  // this deque contains page pointer that was latche during index operation
+  // this deque contains page pointer that was latched during index operation
   std::shared_ptr<std::deque<Page *>> page_set_;
+
   // this set contains page_id that was deleted during index operation
   std::shared_ptr<std::unordered_set<page_id_t>> deleted_page_set_;
 

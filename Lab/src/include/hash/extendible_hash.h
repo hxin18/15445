@@ -10,7 +10,6 @@
 #pragma once
 
 #include <cstdlib>
-#include <unordered_map>
 #include <map>
 #include <memory>
 #include <mutex>
@@ -27,42 +26,51 @@ class ExtendibleHash : public HashTable<K, V> {
   struct Bucket {
     Bucket() = default;
     explicit Bucket(size_t i, int d) : id(i), depth(d) {}
-    std::unordered_map<K, V> items;          // key-value pairs
-    std::shared_ptr<Bucket> next;  // overflow bucket
+    std::map<K, V> items;          // key-value pairs
     size_t id = 0;                 // id of Bucket
     int depth = 0;                 // local depth counter
   };
 public:
-  // constructor
-  explicit ExtendibleHash(size_t size);
+    // 构造函数
+    ExtendibleHash(size_t size);
 
-  // helper function to generate hash addressing
-  size_t HashKey(const K &key);
+    // 返回桶的偏移量
+    size_t HashKey(const K &key);
 
-  // helper function to get global & local depth
-  int GetGlobalDepth() const;
+    // 查找桶里的哈希表是否有该值
+    bool Find(const K &key, V &value);
 
-  int GetLocalDepth(int bucket_id) const;
+    // 插入元素
+    void Insert(const K &key, const V &value);
 
-  int GetNumBuckets() const;
+    // 移除元素
+    bool Remove(const K &key);
 
-  // lookup and modifier
-  bool Find(const K &key, V &value) override;
+    size_t Size() const { return pair_count_; }
 
-  bool Remove(const K &key) override;
+    // 返回哈希表当前深度
+    int GetGlobalDepth() const;
 
-  void Insert(const K &key, const V &value) override;
+    // 返回给定偏移的局部深度
+    int GetLocalDepth(int bucket_id) const;
+
+    // 返回桶总数
+    int GetNumBuckets() const;
 
 private:
-  std::shared_ptr<Bucket> split(std::shared_ptr<Bucket> &b);
-  size_t bucketIndex(const K &key);
+    mutable std::mutex mutex_;      // 注意要加mutable
 
-  mutable std::mutex mutex_;          // to protect shared data structure
-  const size_t bucket_size_;  // largest number of elements in a bucket
-  int bucket_count_;          // number of buckets in use
-  int depth;                  // global depth
+    const size_t bucket_size_;    // 每个桶能容纳的元素个数
 
-  std::vector<std::shared_ptr<Bucket>> buckets_;  // smart pointer for auto memory management
+    int bucket_count_;   // 在用的桶数
+
+    size_t pair_count_;     // 哈希表中键值对的个数
+
+    int depth;              // 全局的桶的深度
+
+    std::vector<std::shared_ptr<Bucket>> bucket_;    // 桶数组
+
+    std::shared_ptr<Bucket> split(std::shared_ptr<Bucket> &); // 分裂新桶
 };
 
 } // namespace cmudb

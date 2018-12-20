@@ -27,7 +27,7 @@ public:
   inline Tuple() : allocated_(false), rid_(RID()), size_(0), data_(nullptr) {}
 
   // constructor for table heap tuple
-  Tuple(RID rid) : allocated_(false), rid_(rid) {}
+  Tuple(RID rid) : allocated_(false), rid_(rid), size_(0), data_(nullptr) {}
 
   // constructor for creating a new tuple based on input value
   Tuple(std::vector<Value> values, Schema *schema);
@@ -56,7 +56,7 @@ public:
   // Get the address of this tuple in the table's backing store
   inline char *GetData() const { return data_; }
 
-  // Get length of the tuple, including varchar legth
+  // Get length of the tuple, including varchar length
   inline int32_t GetLength() const { return size_; }
 
   // Get the value of a specified column (const)

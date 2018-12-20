@@ -26,9 +26,9 @@ TableHeap::TableHeap(BufferPoolManager *buffer_pool_manager,
       static_cast<TablePage *>(buffer_pool_manager_->NewPage(first_page_id_));
   assert(first_page != nullptr); // todo: abort table creation?
   first_page->WLatch();
-  LOG_DEBUG("new table page created %d", first_page_id_);
+  //LOG_DEBUG("new table page created %d", first_page_id_);
 
-  first_page->Init(first_page_id_, PAGE_SIZE, INVALID_LSN, log_manager_, txn);
+  first_page->Init(first_page_id_, PAGE_SIZE, INVALID_PAGE_ID, log_manager_, txn);
   first_page->WUnlatch();
   buffer_pool_manager_->UnpinPage(first_page_id_, true);
 }
@@ -67,8 +67,8 @@ bool TableHeap::InsertTuple(const Tuple &tuple, RID &rid, Transaction *txn) {
         return false;
       }
       new_page->WLatch();
-      // std::cout << "new table page " << next_page_id << " created" <<
-      // std::endl;
+      std::cout << "new table page " << next_page_id << " created" <<
+                std::endl;
       cur_page->SetNextPageId(next_page_id);
       new_page->Init(next_page_id, PAGE_SIZE, cur_page->GetPageId(),
                      log_manager_, txn);
