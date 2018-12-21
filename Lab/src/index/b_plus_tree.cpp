@@ -495,7 +495,7 @@ Coalesce(N *neighbor_node, N *node,
 
   // adjust parent
   parent->Remove(index);
-
+  buffer_pool_manager_->UnpinPage(parent->GetPageId(), true);
   // recursive
   if (CoalesceOrRedistribute(parent, transaction)) {
     transaction->AddIntoDeletedPageSet(parent->GetPageId());

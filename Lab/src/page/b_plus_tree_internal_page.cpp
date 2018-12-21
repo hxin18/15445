@@ -125,15 +125,17 @@ Lookup(const KeyType &key, const KeyComparator &comparator) const {
   //k0-v1 k1-v2...
 
   int low = 1, high = GetSize() - 1, mid;
-  while (low < high) {
+  while (low < high ) {
     mid = low + (high - low)/2;
     if (comparator(key, array[mid].first) < 0) {
-      high = mid-1;
+      high = mid;
     } else if (comparator(key, array[mid].first) > 0) {
       low = mid;
     } else {
       return array[mid].second;
     }
+    if(high - low == 1)
+        break;
   }
   return array[low].second;
 }
@@ -268,22 +270,21 @@ template <typename KeyType, typename ValueType, typename KeyComparator>
 void BPlusTreeInternalPage<KeyType, ValueType, KeyComparator>::
 MoveAllTo(BPlusTreeInternalPage *recipient, int index_in_parent,
           BufferPoolManager *buffer_pool_manager) {
-  // first find parent
-  auto *page = buffer_pool_manager->FetchPage(GetParentPageId());
-  if (page == nullptr) {
-    throw Exception(EXCEPTION_TYPE_INDEX,
-                    "all page are pinned while MoveAllTo");
-  }
-  auto *parent = reinterpret_cast<BPlusTreeInternalPage *>(page->GetData());
-
-  // the separation key from parent
-  SetKeyAt(0, parent->KeyAt(index_in_parent));
-
-  // assumption: current page is at the right hand of recipient
-  assert(parent->ValueAt(index_in_parent) == GetPageId());
-
-  // unpin parent page
-  buffer_pool_manager->UnpinPage(parent->GetPageId(), true);
+  // // first find parent
+  // auto *page = buffer_pool_manager->FetchPage(GetParentPageId());
+  // if (page == nullptr) {
+  //   throw Exception(EXCEPTION_TYPE_INDEX,
+  //                   "all page are pinned while MoveAllTo");
+  // }
+  // auto *parent = reinterpret_cast<BPlusTreeInternalPage *>(page->GetData());
+  //
+  // // the separation key from parent
+  // // SetKeyAt(0, parent->KeyAt(index_in_parent));
+  //
+  // // assumption: current page is at the right hand of recipient
+  // assert(parent->ValueAt(index_in_parent) == GetPageId());
+  // // unpin parent page
+  // buffer_pool_manager->UnpinPage(parent->GetPageId(), true);
 
   recipient->CopyAllFrom(array, GetSize(), buffer_pool_manager);
 

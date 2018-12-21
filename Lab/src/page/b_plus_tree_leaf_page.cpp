@@ -242,9 +242,11 @@ RemoveAndDeleteRecord(const KeyType &key, const KeyComparator &comparator) {
  */
 template <typename KeyType, typename ValueType, typename KeyComparator>
 void BPlusTreeLeafPage<KeyType, ValueType, KeyComparator>::
-MoveAllTo(BPlusTreeLeafPage *recipient, int, BufferPoolManager *) {
+MoveAllTo(BPlusTreeLeafPage *recipient, int, BufferPoolManager * buffer_pool_manager) {
   recipient->CopyAllFrom(array, GetSize());
   recipient->SetNextPageId(GetNextPageId());
+  //added
+  buffer_pool_manager->UnpinPage(recipient->GetPageId(), true);
 }
 
 template <typename KeyType, typename ValueType, typename KeyComparator>
